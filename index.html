@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Advanced Slicing for 3D Printing</title>
+<!-- metadata -->
+<meta name="generator" content="S5" />
+<meta name="version" content="1.0" />
+<meta name="subject" content="Advanced STL to GCode translation" />
+<meta name="author" content="Free Beachler" />
+<meta name="company" content="Solid State Depot" />
+<meta name="publisher" content="boulderhackerspace.com" />
+<meta name="description" content="A presentation that outlines the topics covered in the workshop at Solid State Depot titled 'Advanced Slicing'." />
+<meta name="keywords" content="SSD, boulder hackerspace, 3D printer, reprap, hackerspace, gcode, STL, slicing, slic3r, Open Source Software, OSS, Open Source Hardware, OSH, S5" />
+<meta name="robots" content="index, follow" />
+<meta name="revisit-after" content="7 days" />
+<!-- meta additionally -->
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- configuration transition extension -->
+<meta name="tranSitions" content="true" />
+<meta name="fadeDuration" content="500" />
+<meta name="incrDuration" content="250" />
+<!-- configuration autoplay extension -->
+<meta name="autoMatic" content="false" />
+<meta name="playLoop" content="true" />
+<meta name="playDelay" content="10" />
+<!-- configuration audio extension -->
+<meta name="audioSupport" content="true" />
+<meta name="audioVolume" content="100" />
+<meta name="audioError" content="true" />
+<!-- configuration audio debug -->
+<meta name="audioDebug" content="false" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/scala_utf/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/scala_utf/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/scala_utf/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/scala_utf/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- embedded styles -->
+<style type="text/css" media="all">
+.imgcon {
+	width: 100%;
+	margin: 0 auto;
+	padding: 0;
+	text-align: center;
+}
+#anim {
+	width: 33%;
+	height: 320px;
+	position: relative;
+}
+#anim img {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.red {
+	color: red;
+}
+.grey {
+	color: gray;
+}
+</style>
+<!-- S5 JS -->
+<script src="ui/scala_utf/slides.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="layout">
+  <div id="controls"><!-- DO NOT EDIT --></div>
+  <div id="currentSlide"><!-- DO NOT EDIT --></div>
+  <div id="header"></div>
+  <div id="footer">
+    <h1>Advanced Slicing for 3D Printing</h1>
+  </div>
+</div>
+<div class="presentation">
+  <object data="mp3/chillout.mp3" archive="volume:50,loop" type="audio/mp3" class="handout" declare="declare" width="0" height="0">
+  </object>
+  <div class="slide">
+    <h1>OpenSCAD 101</h1>
+    <h3>Free Beachler</h3>
+    <h4><a href="http://boulderhackerspace.com" rel="external">boulderhackerspace.com</a></h4>
+    <p style="font-size: 18px;"><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title" style="font-size: 20px;">OpenSCAD 101</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Free Beachler</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="pix/ccna_80_15.png" /></a><br />
+      Slideshow based on S<span class="red">5</span> 1.3&szlig;6 by Eric Meyers (meyerweb.com) and Christian Effenberger (s5.netzgesta.de).<br />
+    </p>
+    <div class="handout"></div>
+    <object data="mp3/thunder.mp3" archive="volume:50" type="audio/mp3" class="handout" declare="declare" width="0" height="0">
+    </object>
+  </div>
+  <div class="slide">
+    <h1>Prerequisites</h1>
+    <ul>
+      <li>You have a basic idea of what CAD software does. You might have used some type of CAD software, are an expert, or not.</li>
+      <li>You can use a computer.</li>
+      <li>You are inspired to create something.</li>
+    </ul>
+    <object data="mp3/club.mp3" archive="volume:50,loop" type="audio/mp3" class="handout" declare="declare" width="0" height="0">
+    </object>
+  </div>
+  <div class="slide">
+    <h1>What is OpenSCAD?</h1>
+    <ul>
+      <li>Open Source Computer Aided Design </li>
+      <li>Write scripts to design imaginary things. Make them in real life. </li>
+      <li>Easier than programming </li>
+    </ul>
+    <div class="notes">
+      <ul>
+        <li>We discuss other CAD software in SSD's Learn How to 3D Print workshop.</li>
+        <li>We can use OpenSCAD to create things to make with 3D printers.</li>
+      </ul>
+    </div>
+    <object data="mp3/easy.mp3" archive="volume:50,loop" type="audio/mp3" class="handout" declare="declare" width="0" height="0">
+    </object>
+  </div>
+  <div class="slide">
+    <h1>Download and Install</h1>
+    <ul>
+      <li>Windows(tm), OS X(tm), Linux all supported with pre-compiled binaries.</li>
+      <li>Download from http://www.openscad.org/downloads.html.</li>
+      <li>Installation with pre-compiled binaries is straightforward. Double-click the downloaded installation file and install on your PC.</li>
+      <li>Use whatever version is tagged as the <em>latest stable release</em>.</li>
+    </ul>
+    <div class="notes">
+      <ul>
+        <li>If you need unreleased or specialized features you may need a  development-branch binary or you may have to compile it yourself.</li>
+      </ul>
+    </div>
+    <object data="mp3/smart.mp3" archive="volume:50,loop" type="audio/mp3" class="handout" declare="declare" width="0" height="0">
+    </object>
+  </div>
+  <div class="slide">
+    <h1>OpenSCAD Resources</h1>
+    <ul>
+      <li>http://www.openscad.org</li>
+      <li>http://www.openscad.org/documentation.html</li>
+      <li>https://github.com/openscad/openscad/issues</li>
+      <li>https://github.com/openscad/openscad/wiki</li>
+      <li>Follow repository on Github. Extremely active project. Excellent author and development team.</li>
+    </ul>
+    <div class="notes">
+      <ul>
+        <li>Development team performance is constant; this software is free and open source - who keeps bread on the table?</li>
+        <li>If you watch project you may want an email filter for it.</li>
+      </ul>
+    </div>
+    <object data="mp3/electro.mp3" archive="volume:50,loop" type="audio/mp3" class="handout" declare="declare" width="0" height="0">
+    </object>
+  </div>
+  <div class="slide">
+    <h1>Let's SCAD</h1>
+    <ul>
+      <li>We create a text file with .scad extension = OpenSCAD file</li>
+      <li>Open the new file with OpenSCAD</li>
+      <li>cylinder(r = 50, h = 3);</li>
+      <li>Press F5 to compile</li>
+      <li>renders a cylinder with radius 50mm, height 3mm</li>
+      <li>cube([70, 70, 3]);</li>
+      <li>Press F5</li>
+      <li>renders a cube 70mm square, 3mm thick</li>
+    </ul>
+  </div>
+  <div class="slide">
+    <h1>Variables</h1>
+    <ul>
+      <li>Still in our new file, at the top.</li>
+      <li>&raquo; radius = 50;</li>
+      <li>&raquo; size = 70;</li>
+      <li>&raquo; thickness = 3;</li>
+      <li>&raquo; cube([size, size, thickness]);</li>
+      <li>&raquo; cylinder(r = radius, h = thickness);</li>
+    </ul>
+  </div>
+  <div class="slide">
+    <h1>What Did We Just Do?</h1>
+    <ul>
+      <li>In 4 lines of code we've created two CAD objects, a cube and a cylinder.</li>
+      <li>We introduced variables - also called parameters in CAD lingua.</li>
+      <li>We can adjust the size of the cube and cylinder by changing the values of size and radius.</li>
+      <li>We've written a program! We can go home now.</li>
+    </ul>
+  </div>
+  <div class="slide">
+    <h1>Get Modular</h1>
+    <ul>
+      <li>Save our new file.</li>
+      <li>Line break between our variables at the top, and code below it</li>
+      <li>While we're at it, &raquo; size = 2 * radius * cos(45);</li>
+      <li>Wrap our cube and cylinder with:</li>
+      <li>module WhatsIt() { ... }; where ... are the cube and cylinder declarations</li>
+      <li>press F5 -- what?!</li>
+      <li>near the top type:</li>
+      <li>WhatsIt();</li>
+      <li>press F5 - OK!</li>
+    </ul>
+  </div>
+  <div class="slide">
+    <h1>Centering</h1>
+    <ul>
+      <li>Center obj's with center = true param. Default is false.</li>
+      <li>Make a copy of the WhatsIt module -- change the name to WhatsItCentered</li>
+      <li>&raquo; cube([size, size, thickness], center=true);</li>
+      <li>&raquo; cylinder(r = radius, h = thickness, center = true);</li>
+      <li>Centers both objects</li>
+      <li>Cylinder is already centered on X, Y, so center attribute affects Z</li>
+      <li>call WhatsItCentered() from the top of our SCAD; instead of WhatsIt()</li>
+      <li>press F5</li>
+    </ul>
+    <div class="notes">
+      <ul>
+        <li>Objects can also be centered with the translate statement</li>
+        <li>Works with most objects</li>
+        <li>You can define a center attribute in your own module = OpenScad201</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide">
+    <h1>Positioning</h1>
+    <ul>
+      <li>We position objects using the translate statement.</li>
+      <li>translate([x-offset, y-offset, z-offset]);</li>
+      <li>Edit WhatsIt()</li>
+      <li>&raquo; translate([0, 0, -thickness / 2]) cylinder(r = radius, h = thickness * 2);</li>
+      <li>&raquo; translate([-size / 2, -size / 2, -thickness / 2]) cube([size, size, thickness]);</li>
+      <li>add the call to WhatsIt() again - at the top of our script</li>
+      <li>press F5</li>
+    </ul>
+  </div>
+  <div class="slide">
+    <h1>What Did We Just Do?</h1>
+    <ul>
+      <li>We used the translate statement to manually center each object.</li>
+      <li>Each object has its own translate statement. That means each object is positioned (centered) independentely of other objects.</li>
+      <li>&raquo; translate([size, size, 0]) WhatsIt();</li>
+      <li>uncomment/call WhatsItCentered();</li>
+      <li>Press F5</li>
+      <li>We see two copies of WhatsIt.</li>
+    </ul>
+  </div>
+  <div class="slide">
+    <h1>Rotation</h1>
+    <ul>
+      <li>We can rotate obects in OpenSCAD</li>
+      <li>rotate([x-rot, y-rot, z-rot]);</li>
+      <li>Make sure our OpenSCAD view has Axes enabled</li>
+      <li>&raquo; rotate([90, 0, 0]) WhatsItCentered();</li>
+      <li>Our module is rotated 90-degress on the X-axis</li>
+    </ul>
+    <div class="notes">
+      <ul>
+        <li>rotation values are in degress ranging 0 - 359</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide">
+    <h1>Nesting</h1>
+    <ul>
+      <li>Translate/rotate an object, module; or a set of declarations with <strong>{}</strong> nesting operators</li>
+      <li><strong>{}</strong> groups declarations that we want to position or rotate</li>
+      <li>delete rotate([90, 0, 0]) from code, i.e. &raquo; WhatsItCentered();</li>
+      <li>In WhatsItCentered:</li>
+      <li>wrap our cube and cylinder with &raquo; rotate([90, 0, 0]) { ... }; where ... are the cube and cylinder statements</li>
+      <li>Press F5 - same result as before</li>
+    </ul>
+    <div class="notes">
+      <ul>
+        <li>statements like translate, rotate usually apply to the next (following) statement</li>
+        <li>braces are optional but always recommended even for single statements</li>
+        <li>translate/rotate are not the only modifiers that can use braces</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide">
+    <h1>Some Cleanup</h1>
+    <ul>
+      <li>Let's clean up our SCAD by deleting WhatsItCentered() - the module and call to it.</li>
+      <li>Also let's delete any "thickness * 2" code introduced in examples.</li>
+    </ul>
+    <div class="notes">
+      <ul>
+        <li>let's make something printable!</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide">
+    <h1>Include Libraries</h1>
+    <ul>
+      <li>Now let's grab a library for generating fonts.</li>
+      <li>http://www.thingiverse.com/thing:16193</li>
+      <li>Per instructions, place Write.scad and Letters.DXF in the same folder as our SCAD file.</li>
+      <li>&raquo; include &lt;Write.scad&gt; at the top of our file</li>
+      <li>add module SSD() { write(&quot;SSD&quot;, t = 5, h = font_size, center = true); }</li>
+      <li>call it</li>
+      <li>translate([0, 0, thickness * 2 - o]) SSD();</li>
+    </ul>
+    <div class="notes">
+      <ul>
+        <li>libraries must be in the same folder as our project</li>
+        <li>there is a global place for libraries in OpenSCAD installation directory</li>
+        <li>Check out MCAD - a parts library</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide">
+    <h1>Final Cleanup</h1>
+    <ul>
+      <li>We have two module calls:  WhatsIt() and SSD()</li>
+      <li>Rename WhatsIt &raquo; EmblemBase().  Rename the call to it.</li>
+      <li>Wrap our calls to EmblemBase() and SSD() in a new module.</li>
+      <li>&raquo; module SSDEmblem() { union() { EmblemBase(); SSD(); } }</li>
+      <li>Call SSD_Emblem() at the top of our file.</li>
+      <li>Save our file.</li>
+    </ul>
+    <div class="notes">
+      <ul>
+        <li>We can now re-use the SSD embled as a module in other files if we want.</li>
+        <li>We just performed a basic exercise in additive/subtractive modeling.  We have one object comprised of three smaller objects.</li>
+        <li>In the SCAD source that accompanies this presentation, we also added a new variable "o".  This is used to prevent manifold errors in the output STL.  Notice how we use this on the z-axis.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide">
+    <h1>Export STL</h1>
+    <ul>
+      <li>Save our file again, just in case.</li>
+      <li>First compile with F6</li>
+      <li>Go to File &raquo; Export &raquo; Export as STL</li>
+      <li>Save exported STL file.</li>
+    </ul>
+    <div class="notes">
+      <ul>
+        <li>our STL file should be ready to convert to GCode for 3D printing</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide">
+    <h1>Further Topics</h1>
+    <ul>
+      <li>We only scraped the surface.</li>
+      <li>Additive and subtractive modeling:  union(), intersect(), difference().</li>
+      <li>Errors, troubleshooting, output formats.</li>
+      <li>Rounding and merging with minkowski() and hull().</li>
+      <li>Polyhedrons, extrusions, and more.</li>
+    </ul>
+    <div class="notes">
+    </div>
+    <object data="mp3/mini1.mp3" archive="volume:50,loop" type="audio/mp3" class="handout" declare="declare" width="0" height="0">
+    </object>
+  </div>
+  <div class="slide">
+    <h1>Conclusion</h1>
+    <ul>
+      <li>Thank you for your support!</li>
+      <li>Workshop Donations Accepted</li>
+      <li>Join Solid State Depot!  <a href="http://www.boulderhackerspace.com">http://www.boulderhackerspace.com</a></li>
+      <li>Boulder Hackerspace (SSD) Google Group at <a href="https://groups.google.com/forum/#!forum/boulder-hackerspace-public" rel="external">https://groups.google.com/forum/#!forum/boulder-hackerspace-public</a>
+      <li>If you want to contact me use: <span class="tw">free@terawattindustries.com</span><br />
+        <br />
+        alternatively: <a href="https://store.terawattindustries.com/contact-us" rel="external">Terawatt Industries website</a></li>
+    </ul>
+    <object data="mp3/mini2.mp3" archive="volume:50,loop" type="audio/mp3" class="handout" declare="declare" width="0" height="0">
+    </object>
+  </div>
+</div>
+</body>
+</html>
